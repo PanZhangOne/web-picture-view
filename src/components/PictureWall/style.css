@@ -1,0 +1,5 @@
+.picture-wall-wrap {
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: auto;
+}
