@@ -4,27 +4,29 @@ import { FolderTree } from "./components/FolderTree";
 import { PictureWall } from "./components/PictureWall";
 
 import "./App.css";
+import { Folder } from "./interfaces/Folder";
+
+/**
+ * 处理逻辑为:
+ *
+ * 左侧显示目录树, 右侧显示选中目录及其子目录下的所有文件
+ */
 
 type PageState = {
   /**
-   * 当前选择的文件夹
+   * 允许访问的文件夹
    */
-  dirctoryHandle: Promise<FileSystemDirectoryHandle> | null;
-  /**
-   * 当前选择的文件夹下面的子文件夹
-   */
-  childDirectoryHanldes: FileSystemDirectoryHandle[];
+  folders: Folder[];
 
   /**
-   * 当前选择文件夹下的文件
+   * 当前选中的文件夹
    */
-  fileHandles: File[];
+  selectedFolder: Folder | undefined;
 };
 
 const defaultPageState: PageState = {
-  dirctoryHandle: null,
-  childDirectoryHanldes: [],
-  fileHandles: [],
+  folders: [],
+  selectedFolder: undefined,
 };
 
 function App() {
@@ -34,36 +36,42 @@ function App() {
     dirHandle: Promise<FileSystemDirectoryHandle>
   ) => {
     const _pageState: PageState = {
-      dirctoryHandle: dirHandle,
-      fileHandles: [],
-      childDirectoryHanldes: [],
+      folders: [],
+      selectedFolder: undefined,
     };
 
+    const rootFolder = new Folder((await dirHandle).name, dirHandle, []);
     for await (const entry of (await dirHandle).values()) {
       if (entry.kind === "directory") {
-        _pageState.childDirectoryHanldes.push(entry);
-      } else if (entry.kind === "file") {
-        const file = await entry.getFile();
-        if (file.type.startsWith("image")) {
-          _pageState.fileHandles.push(file);
-        }
+        // 处理文件夹数据
+        rootFolder.children?.push(
+          new Folder(entry.name, Promise.resolve(entry))
+        );
       }
     }
-
+    _pageState.selectedFolder = rootFolder;
+    _pageState.folders = [rootFolder];
     setPageState(_pageState);
   };
 
+  const hasFolders = pageState.folders.length > 0;
+
   return (
     <>
-      {!pageState.dirctoryHandle ? (
+      {!hasFolders ? (
         <FolderSelect onSelect={handleSelectDir} />
       ) : (
         <div className="picture-view-wrap">
           <div className="tree-wrap">
-            <FolderTree folders={pageState.childDirectoryHanldes} />
+            <FolderTree
+              folders={pageState.folders}
+              onSelect={(folder) => {
+                setPageState({ ...pageState, selectedFolder: folder });
+              }}
+            />
           </div>
           <div className="content-wrap">
-          <PictureWall pictureList={pageState.fileHandles} />
+            <PictureWall folder={pageState.selectedFolder} />
           </div>
         </div>
       )}

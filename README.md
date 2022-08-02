@@ -1,13 +1,13 @@
 # 基于WEB的图片浏览器
 
-
 选择本地一个文件夹,流览文件夹下的所有图片
 
-使用React Vite技术栈, 文件部分使用File System Access API
+使用`React` `Vite`技术栈, 文件相关操作API使用`File System Access API`. UI框架使用Semi
 
 ## 功能
 
-- 图片分类
-    - 文件夹分类
-    - 按日期分类
-- 图片预览
+- [x] 图片分类
+    - [x] 文件夹分类
+    - [ ] 按日期分类
+- [ ] 大图预览
+- [ ] 支持heic
