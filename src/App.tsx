@@ -4,7 +4,8 @@ import { FolderTree } from "./components/FolderTree";
 import { PictureWall } from "./components/PictureWall";
 
 import "./App.css";
-import { Folder } from "./interfaces/Folder";
+import { Folder } from "./model/Folder";
+import { AppContent } from "./components/AppContent";
 
 /**
  * 处理逻辑为:
@@ -12,7 +13,7 @@ import { Folder } from "./interfaces/Folder";
  * 左侧显示目录树, 右侧显示选中目录及其子目录下的所有文件
  */
 
-type PageState = {
+export type PageState = {
   /**
    * 允许访问的文件夹
    */
@@ -61,19 +62,7 @@ function App() {
       {!hasFolders ? (
         <FolderSelect onSelect={handleSelectDir} />
       ) : (
-        <div className="picture-view-wrap">
-          <div className="tree-wrap">
-            <FolderTree
-              folders={pageState.folders}
-              onSelect={(folder) => {
-                setPageState({ ...pageState, selectedFolder: folder });
-              }}
-            />
-          </div>
-          <div className="content-wrap">
-            <PictureWall folder={pageState.selectedFolder} />
-          </div>
-        </div>
+        <AppContent pageState={pageState} setPageState={setPageState} />
       )}
     </>
   );

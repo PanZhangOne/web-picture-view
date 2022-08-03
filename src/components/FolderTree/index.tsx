@@ -2,7 +2,7 @@ import { Tree } from "@douyinfe/semi-ui";
 import { TreeNodeData } from "@douyinfe/semi-ui/lib/es/tree";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Folder } from "../../interfaces/Folder";
+import { Folder } from "../../model/Folder";
 import { IconFolder } from "@douyinfe/semi-icons";
 
 interface FolderTreeProps {

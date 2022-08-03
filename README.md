@@ -4,8 +4,9 @@
 
 使用`React` `Vite`技术栈, 文件相关操作API使用`File System Access API`. UI框架使用Semi
 
-## 功能
+## 功能列表
 
+- [x] 拖拽功能
 - [x] 图片分类
     - [x] 文件夹分类
     - [ ] 按日期分类

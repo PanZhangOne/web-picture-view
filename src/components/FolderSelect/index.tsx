@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography } from "@douyinfe/semi-ui";
+import { Card, Typography, Toast } from "@douyinfe/semi-ui";
 
 import "./style.css";
 
@@ -17,9 +17,39 @@ export const FolderSelect: React.FC<FolderSelectProps> = ({ onSelect }) => {
     }
   };
 
-  const handleDragDir = async (e: React.DragEvent<HTMLDivElement>) => {
+  const stopDrafEvent = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    console.log(e.dataTransfer.items);
+    e.stopPropagation();
+  };
+
+  const handleDrag = async (e: React.DragEvent<HTMLDivElement>) => {
+    stopDrafEvent(e);
+
+    let dirHandleList: Promise<FileSystemDirectoryHandle>[] = [];
+
+    for (const item of e.dataTransfer.items) {
+      if (
+        item.getAsFileSystemHandle() !== null &&
+        item.webkitGetAsEntry()?.isDirectory
+      ) {
+        dirHandleList.push(
+          item.getAsFileSystemHandle() as Promise<FileSystemDirectoryHandle>
+        );
+      }
+    }
+
+    if (dirHandleList.length === 0) {
+      Toast.warning({ content: "未选择文件夹" });
+      return;
+    }
+    if (dirHandleList.length > 1) {
+      Toast.warning({ content: "当前只允许查看一个根目录下的所有图片" });
+      return;
+    }
+
+    if (onSelect) {
+      onSelect(dirHandleList[0]);
+    }
   };
 
   return (
@@ -31,8 +61,11 @@ export const FolderSelect: React.FC<FolderSelectProps> = ({ onSelect }) => {
     >
       <Card className="card-wrap">
         <div
+          draggable
           className="folder-select"
-          onDrag={handleDragDir}
+          onDrop={handleDrag}
+          onDragEnter={stopDrafEvent}
+          onDragOver={stopDrafEvent}
           onClick={handleClick}
         >
           <Title heading={3} color="secondary">

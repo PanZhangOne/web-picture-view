@@ -1,7 +1,7 @@
 import { Card, Col, Row } from "@douyinfe/semi-ui";
 import { CardProps } from "@douyinfe/semi-ui/lib/es/card";
 import { useEffect, useState } from "react";
-import { Folder } from "../../interfaces/Folder";
+import { Folder } from "../../model/Folder";
 import { Image } from "../Image";
 
 import "./style.css";
