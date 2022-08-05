@@ -1,0 +1,41 @@
+name: GitHub Actions Build and Deploy Demo
+
+on:
+
+  push:
+
+    branches:
+
+     - master
+
+jobs:
+
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: checkout
+      - uses: actions/checkout@master
+      - name: install
+
+        run: pnpm
+
+        # 打包构建
+
+      - name: build
+
+        run: pnpm run build
+
+        # 部署运行
+
+      - name: Deploy
+
+        uses: JamesIves/github-pages-deploy-action@v4.3.0
+
+        with:
+
+          ACCESS_TOKEN: ${{ secrets.SECRET_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist
