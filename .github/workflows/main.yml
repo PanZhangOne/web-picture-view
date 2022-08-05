@@ -1,3 +1,4 @@
+
 name: GitHub Actions Build and Deploy Demo
 
 on:
@@ -17,16 +18,20 @@ jobs:
     steps:
 
       - name: checkout
-      - uses: actions/checkout@master
-      - name: install
 
-        run: pnpm
+        uses: actions/checkout@master
+
+        # 安装依赖
+
+      - name: install
+
+        run: yarn
 
         # 打包构建
 
       - name: build
 
-        run: pnpm run build
+        run: yarn build:test
 
         # 部署运行
 
@@ -36,6 +41,8 @@ jobs:
 
         with:
 
-          ACCESS_TOKEN: ${{ secrets.SECRET_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
           BRANCH: gh-pages
+
           FOLDER: dist
