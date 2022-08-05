@@ -18,6 +18,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
    # 这里展示了如何执行多条命令
+    - name: Install pnpm
+      run: npm install pnpm -g
     - name: Install and Build
       run: |
         pnpm install
