@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { FolderSelect } from "./components/FolderSelect";
-import { FolderTree } from "./components/FolderTree";
-import { PictureWall } from "./components/PictureWall";
 
 import "./App.css";
 import { Folder } from "./model/Folder";
