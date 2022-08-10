@@ -21,6 +21,8 @@ interface ImageProps {
    * 图片标签参数
    */
   imageProps?: ImgHTMLAttributes<HTMLImageElement>;
+
+  onClick?: () => void;
 }
 
 const ImageFooter: React.FC<{ fileName: string }> = ({ fileName }) => {
@@ -38,11 +40,13 @@ export const Image: React.FC<ImageProps> = (props) => {
   );
 
   return (
-    <Card
-      cover={img}
-      footer={<ImageFooter fileName={props.fileName} />}
-      footerLine
-      shadows="hover"
-    />
+    <div onClick={props.onClick}>
+      <Card
+        cover={img}
+        footer={<ImageFooter fileName={props.fileName} />}
+        footerLine
+        shadows="hover"
+      />
+    </div>
   );
 };
