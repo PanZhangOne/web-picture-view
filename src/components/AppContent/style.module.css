@@ -1,0 +1,21 @@
+.pictureViewWrap {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.treeWrap {
+  width: 300px;
+  height: 100vh;
+  margin-right: 0.5rem;
+  overflow: hidden;
+  overflow-y: auto;
+  border-right: 1px solid #eee;
+}
+
+.contentWrap {
+  flex: 1;
+}

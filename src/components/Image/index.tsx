@@ -1,5 +1,5 @@
 import { ImgHTMLAttributes } from "react";
-import { Card, Typography } from "@douyinfe/semi-ui";
+import { Typography } from "@douyinfe/semi-ui";
 
 interface ImageProps {
   /**
@@ -39,14 +39,5 @@ export const Image: React.FC<ImageProps> = (props) => {
     />
   );
 
-  return (
-    <div onClick={props.onClick}>
-      <Card
-        cover={img}
-        footer={<ImageFooter fileName={props.fileName} />}
-        footerLine
-        shadows="hover"
-      />
-    </div>
-  );
+  return <div>{img}</div>;
 };

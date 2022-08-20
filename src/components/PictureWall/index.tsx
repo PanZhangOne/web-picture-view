@@ -1,4 +1,4 @@
-import { Card, Col, Row } from "@douyinfe/semi-ui";
+import { Card, Col, Row, Typography } from "@douyinfe/semi-ui";
 import { CardProps } from "@douyinfe/semi-ui/lib/es/card";
 import { useCallback, useEffect, useState } from "react";
 import { Folder } from "../../model/Folder";
@@ -17,12 +17,15 @@ interface PictureWallProps {
    * 选择的文件夹
    */
   folder?: Folder;
+
+  onSelect?: (dirHandle: Promise<FileSystemDirectoryHandle>) => void;
 }
 
 export const PictureWall: React.FC<PictureWallProps> = (props) => {
   const [pictureList, setPictureList] = useState<File[]>([]);
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const { Text } = Typography;
 
   const initPictureData = async () => {
     if (!props.folder) {
@@ -49,7 +52,17 @@ export const PictureWall: React.FC<PictureWallProps> = (props) => {
 
   return (
     <div className="picture-wall-wrap">
-      <Card {...props} title="图片列表" bordered headerLine>
+      <Card
+        {...props}
+        title={
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Text>图片列表</Text>
+            <Text link type="warning">重新选择</Text>
+          </div>
+        }
+        bordered
+        headerLine
+      >
         <Row gutter={30}>
           {pictureList.map((item, index) => {
             const imgSrc = URL.createObjectURL(item);

@@ -1,13 +1,14 @@
 import { PageState } from "../../App";
 import { FolderTree } from "../FolderTree";
 import { PictureWall } from "../PictureWall";
-
-import "./style.css";
+import styles from "./style.module.css";
 
 interface AppContentProps {
   pageState: PageState;
 
   setPageState: (pageState: PageState) => void;
+
+  onSelect?: (dirHandle: Promise<FileSystemDirectoryHandle>) => void;
 }
 
 export const AppContent: React.FC<AppContentProps> = ({
@@ -15,8 +16,8 @@ export const AppContent: React.FC<AppContentProps> = ({
   setPageState,
 }) => {
   return (
-    <div className="picture-view-wrap">
-      <div className="tree-wrap">
+    <div className={`${styles.pictureViewWrap}`}>
+      <div className={`${styles.treeWrap}`}>
         <FolderTree
           folders={pageState.folders}
           onSelect={(folder) => {
@@ -24,7 +25,7 @@ export const AppContent: React.FC<AppContentProps> = ({
           }}
         />
       </div>
-      <div className="content-wrap">
+      <div className={`${styles.contentWrap}`}>
         <PictureWall folder={pageState.selectedFolder} />
       </div>
     </div>

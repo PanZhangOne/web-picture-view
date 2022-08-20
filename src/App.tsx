@@ -60,7 +60,7 @@ function App() {
       {!hasFolders ? (
         <FolderSelect onSelect={handleSelectDir} />
       ) : (
-        <AppContent pageState={pageState} setPageState={setPageState} />
+        <AppContent onSelect={handleSelectDir} pageState={pageState} setPageState={setPageState} />
       )}
     </>
   );

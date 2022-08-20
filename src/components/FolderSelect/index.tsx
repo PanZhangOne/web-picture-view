@@ -59,7 +59,7 @@ export const FolderSelect: React.FC<FolderSelectProps> = ({ onSelect }) => {
         e.preventDefault();
       }}
     >
-      <Card className="card-wrap">
+      <Card className="card-wrap" shadows="hover">
         <div
           draggable
           className="folder-select"
